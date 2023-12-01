@@ -20,7 +20,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
  
-export function MultiLevelSidebar() {
+export default function SideBarEstoque() {
   const [open, setOpen] = React.useState(0);
  
   const handleOpen = (value) => {
@@ -28,7 +28,7 @@ export function MultiLevelSidebar() {
   };
  
   return (
-    <Card className="h-[92vh] w-auto max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-blue-900 rounded-none">
+    <Card className="h-[92vh] w-auto max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-blue-900 rounded-none ">
       <List>
         
         <Accordion
@@ -58,12 +58,12 @@ export function MultiLevelSidebar() {
                     <ChevronRightIcon strokeWidth={3} className={`h-3 w-5 transition-transform ${open === 2 ? "rotate-90" : ""}`} />
                   </ListItemPrefix>
                     <Typography color="white" className="mr-auto font-normal">
-                      Doador
+                      Produto
                     </Typography>
                 </AccordionHeader>
               </ListItem>
                 <AccordionBody className="py-1">
-                  Registrar Doador 
+                  Registrar Produto
                 </AccordionBody>
             </Accordion>
 
@@ -72,7 +72,7 @@ export function MultiLevelSidebar() {
                 <ListItemPrefix>
                   <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                 </ListItemPrefix>
-                Usuário
+                Estoque
               </ListItem>
 
           </AccordionBody>
