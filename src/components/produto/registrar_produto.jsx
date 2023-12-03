@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import Select from "react-select";
+// import { api } from "../../services/api";
+//import { toast } from "react-toastify";
+
 import {
   Button,
   Dialog,
@@ -27,19 +31,45 @@ export function AdicionarProduto({ onAdicionarProduto }) {
     }));
   };
 
-  const handleRegistrarProduto = () => {
-    // Adicionar lógica para validar e processar o novo produto
-    // Por exemplo, enviar para um servidor, atualizar o estado local, etc.
-    // Neste exemplo, apenas chamaremos a função de callback fornecida
-    onAdicionarProduto(novoProduto);
-    // Limpar o formulário e fechar o diálogo
-    setNovoProduto({ nome: "", familia: "", categoria: "" });
+
+  //   useEffect = (() => {
+  //     getCategoria();
+  //     }, [])
+
+  // async function getCategoria() {
+	// 	try {
+
+	// 		const { data } = await api.get('/api/Categoria/buscartodos');
+	// 		setDoador(data);
+	// 	} catch (err) {
+	// 		const messageError = err.message;
+	// 		toast.error({messageError});
+	// 	}
+	// }
+
+
+  const handleRegistrarProduto = async () => {
+    try {
+      const resposta = await axios.post('sua-api-endpoint/aqui', {
+        nome: produto.NOME,
+        familia: produto.FAMILIA,
+      });
+
+      console.log('Dados enviados com sucesso', resposta.data);
+    } catch (erro) {
+      console.error('Erro ao enviar dados:', erro.message);
+    }
     setOpen(false);
-  };
+  }
+
+  const options = [
+    { /*value: getCategoria(categoria.DESCRICAO), label: getCategoria(categoria.DESCRICAO) */},
+  ]
 
   return (
     <>
       <Button onClick={handleOpen}>Adicionar Produto</Button>
+      <form>
       <Dialog
         size="xs"
         open={open}
@@ -72,10 +102,10 @@ export function AdicionarProduto({ onAdicionarProduto }) {
             <Typography className="-mb-2" variant="h6">
               Categoria do Produto
             </Typography>
-            <Input
+            <Select
               label="Categoria do Produto"
               size="lg"
-              value={novoProduto.categoria}
+              options={options}
               onChange={(e) => handleInputChange("categoria", e.target.value)}
             />
           </CardBody>
@@ -91,6 +121,7 @@ export function AdicionarProduto({ onAdicionarProduto }) {
           </CardFooter>
         </Card>
       </Dialog>
+      </form>
     </>
   );
 }

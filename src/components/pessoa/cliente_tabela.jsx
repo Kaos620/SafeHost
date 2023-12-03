@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { RegistrarCategoria } from "./categoria";
-import { AdicionarProduto } from "./registrar_produto";
-// import { api } from "../../services/api";
-//import { toast } from "react-toastify";
+import { FazerCheckIn } from "./check_in";
+import { RegistrarCliente } from "./registrar_cliente";
+import { DesativarPessoa } from "./desativar";
+
 import {
     MagnifyingGlassIcon,
     ChevronUpDownIcon,
@@ -16,36 +16,40 @@ import {
     Button,
     CardBody,
     CardFooter,
-    IconButton,
-    Tooltip,
   } from "@material-tailwind/react";
    
 
-  const TABLE_HEAD = ["Produto", "Categoria", "Ultima Entrada", "Excluir"];
+  const TABLE_HEAD = ["Cliente", "Ultima Entrada", "Check-In" ,"Desativar"];
    
   
-   
-  export function Produtos() {
-
-      //   useEffect = (() => {
-      //     getProduto();
-      //     }, [])
-
-      // async function getProduto() {
-      // 	try {
-
-      // 		const { data } = await api.get('/api/Produto/buscartodos');
-      // 		setProduto(data);
-      // 	} catch (err) {
-      // 		const messageError = err.message;
-      // 		toast.error({messageError});
-      // 	}
-      // }
-
+  export function Clientes() {
+    
     const [editedRows, setEditedRows] = useState({});
-    const [produto, setProduto ] = useState({})
+    const [cliente, setcliente ] = useState({})
+    
+    //   useEffect = (() => {
+      //     getCliente();
+      //     }, [])
+      
+      // async function getCliente() {
+        // 	try {
+          
+          // 		const { data } = await api.get('/api/Cliente/buscartodos');
+	// 		setCliente(data);
+	// 	} catch (err) {
+    // 		const messageError = err.message;
+    // 		toast.error({messageError});
+    // 	}
+    // }
 
 
+    const TABLE_ROWS = [
+      {
+        nome: cliente.NOME + cliente.SOBRENOME,
+        date: cliente.DATA_NASCIMENTO,
+      },
+    ];
+    
     const handleInputChange = (index, field, value) => {
       setEditedRows((prev) => ({
         ...prev,
@@ -56,19 +60,9 @@ import {
       }));
     };
 
-    const TABLE_ROWS = [
-      {
-        nome: produto.NOME,
-        familia: produto.FAMLILIA,
-        categoria: produto.CATEGORIA,
-        date: <getCurrentDate/>,
-      },
-    ];
-
-
-    const handleAdicionarProduto = (novoProduto) => {
+    const handleAdicionarCliente = (novoCliente) => {
       // Adicionar o novo produto à tabela
-      setTableRows((prevRows) => [...prevRows, { ...novoProduto, date: getCurrentDate() }]);
+      setTableRows((prevRows) => [...prevRows, { ...novoDoador, date: getCurrentDate() }]);
     };
   
     const getCurrentDate = () => {
@@ -87,18 +81,12 @@ import {
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Lista de Produtos
-              </Typography>
-              <Typography color="gray" className="mt-1 font-normal">
-                Todos os produtos cadastrados devem ter verificado a data de validade
+                Lista de Clientes
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <AdicionarProduto variant="outlined" size="sm">
-                <handleAdicionarProduto/>;
-              </AdicionarProduto>
+              <RegistrarCliente variant="outlined" size="sm" />
               
-              <RegistrarCategoria className="flex items-center gap-3" size="sm"/>
 
             </div>
           </div>
@@ -106,10 +94,9 @@ import {
 
             <div className="w-full md:w-72">
               <Input
-                label = "Pesquisar"
-                type = "search"
-                icon = {<MagnifyingGlassIcon className="h-5 w-5" />
-            }
+                label="Pesquisar"
+                type="search"
+                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
           </div>
@@ -139,7 +126,7 @@ import {
             </thead>
             <tbody>
               {TABLE_ROWS.map(
-                ({ nome, familia, categoria, date }, index) => {
+                ({ nome, date }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast
                     ? "p-4"
@@ -157,25 +144,8 @@ import {
                             >
                               {editedRows[index]?.nome || nome}
                             </Typography>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                               {editedRows[index]?.familia || familia}
-                            </Typography>
+
                           </div>
-                        </div>
-                      </td>
-                      <td className={classes}>
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                             {editedRows[index]?.categoria || categoria}
-                          </Typography>
                         </div>
                       </td>
                       <td className={classes}>
@@ -187,12 +157,13 @@ import {
                           {editedRows[index]?.date || date}
                         </Typography>
                       </td>
+
                       <td className={classes}>
-                        <Tooltip content="Deletar">
-                          <IconButton variant="text">
-                            <XMarkIcon className="h-4 w-4" />
-                          </IconButton>
-                        </Tooltip>
+                        <FazerCheckIn className="flex items-center gap-3" size="sm"/>
+                      </td>
+
+                      <td className={classes}>
+                            <DesativarPessoa />
                       </td>
                     </tr>
                   );

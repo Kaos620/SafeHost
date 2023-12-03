@@ -14,7 +14,7 @@
 <feBlend mode="normal" in2="shape" result="effect1_innerShadow_36_46"/>
 </filter>
 <clipPath id="clip0_36_46">
-<rect width="50" height="41" fill="white"/>
+<rect width="50" height="41" fill="black"/>
 </clipPath>
 </defs>
 </svg>

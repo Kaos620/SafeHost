@@ -1,9 +1,11 @@
-import {Doador} from './pages/doador';
-import { Estoque } from './pages/estoque';
-import { LogIn } from './components/log in/log_in';
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "./routes/rotas";
 
-export default function App() {
+export function App() {
+
   return (
-    <LogIn/>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   )
 }

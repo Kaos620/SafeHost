@@ -11,11 +11,27 @@ import {
  
 export function RegistrarCategoria() {
   const [open, setOpen] = React.useState(false);
+
+
   const handleOpen = () => setOpen((cur) => !cur);
- 
+
+  const handleRegistrarCategoria  = async () => {
+    try {
+      const resposta = await axios.post('sua-api-endpoint/aqui', {
+        categoria: dadosCategoria,
+      });
+
+      console.log('Dados enviados com sucesso', resposta.data);
+    } catch (erro) {
+      console.error('Erro ao enviar dados:', erro.message);
+    }
+    setOpen(false);
+  }
+  
   return (
     <>
       <Button onClick={handleOpen}>Registrar Categoria</Button>
+      <form>
       <Dialog
         size="xs"
         open={open}
@@ -40,19 +56,20 @@ export function RegistrarCategoria() {
             <Input label="Categoria" size="lg" />
 
           </CardBody>
-          <CardFooter className = "pt-0">
-            <Button type = "submit"
-                    href = "#"
-                    variant = "gradient" 
-                    onClick = {handleOpen} 
-                    fullWidth
-            >
-              Registrar
-            </Button>
             
-          </CardFooter>
-        </Card>
+        <CardFooter className = "pt-0">
+          <Button type = "submit"
+                  href = "#"
+                  variant = "filled" 
+                  onClick = {handleRegistrarCategoria} 
+                  fullWidth
+                  >
+            Registrar
+          </Button>
+        </CardFooter>
+      </Card>
       </Dialog>
+      </form>
     </>
   );
-}
+  }
