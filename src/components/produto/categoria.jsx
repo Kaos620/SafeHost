@@ -1,4 +1,6 @@
-import React from "react";
+import { useState } from "react";
+import axios from "axios";
+
 import {
   Button,
   Dialog,
@@ -10,16 +12,22 @@ import {
 } from "@material-tailwind/react";
  
 export function RegistrarCategoria() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [novaCategoria, setNovaCategoria] = useState("")
 
 
   const handleOpen = () => setOpen((cur) => !cur);
 
-  const handleRegistrarCategoria  = async () => {
+  const handleRegistrarCategoria  = async (e) => {
+    e.preventDefault();
+
     try {
-      const resposta = await axios.post('sua-api-endpoint/aqui', {
-        categoria: dadosCategoria,
-      });
+      console.log("Entrou api post categoria")
+
+      const resposta = await axios.post(
+        'https://localhost:7196/api/ProdutoCategoria/adicionar', {
+          DESCRICAO: novaCategoria,
+        });
 
       console.log('Dados enviados com sucesso', resposta.data);
     } catch (erro) {
@@ -32,43 +40,48 @@ export function RegistrarCategoria() {
     <>
       <Button onClick={handleOpen}>Registrar Categoria</Button>
       <form>
-      <Dialog
-        size="xs"
-        open={open}
-        handler={handleOpen}
-        className="bg-transparent shadow-none"
-      >
-        <Card className="mx-auto w-full max-w-[24rem]">
-          <CardBody className="flex flex-col gap-4">
-            <Typography variant="h4" color="blue-gray">
-              Categoria
-            </Typography>
-            <Typography
-              className="mb-3 font-normal"
-              variant="paragraph"
-              color="gray"
-            >
-              Digite as informações para registrar uma categoria 
-            </Typography>
-            <Typography className="-mb-2" variant="h6">
-              Nome da Categoria
-            </Typography>
-            <Input label="Categoria" size="lg" />
+        <Dialog
+          size="xs"
+          open={open}
+          handler={handleOpen}
+          className="bg-transparent shadow-none"
+        >
+          <Card className="mx-auto w-full max-w-[24rem]">
+            <CardBody className="flex flex-col gap-4">
+              <Typography variant="h4" color="blue-gray">
+                Categoria
+              </Typography>
+              <Typography
+                className="mb-3 font-normal"
+                variant="paragraph"
+                color="gray"
+              >
+                Digite as informações para registrar uma categoria
+              </Typography>
+              <Typography className="-mb-2" variant="h6">
+                Nome da Categoria
+              </Typography>
+              <Input
+                label="Categoria"
+                size="lg"
+                maxLength={30}
+                value={novaCategoria}
+                onChange={(e) => setNovaCategoria(e.target.value)}
+              />
+            </CardBody>
 
-          </CardBody>
-            
-        <CardFooter className = "pt-0">
-          <Button type = "submit"
-                  href = "#"
-                  variant = "filled" 
-                  onClick = {handleRegistrarCategoria} 
-                  fullWidth
-                  >
-            Registrar
-          </Button>
-        </CardFooter>
-      </Card>
-      </Dialog>
+            <CardFooter className="pt-0">
+              <Button
+                type="button"
+                variant="filled"
+                fullWidth
+                onClick={handleRegistrarCategoria}
+              >
+                Registrar
+              </Button>
+            </CardFooter>
+          </Card>
+        </Dialog>
       </form>
     </>
   );

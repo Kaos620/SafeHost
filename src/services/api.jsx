@@ -1,10 +1,10 @@
 import axios from "axios";
-import bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
 
 const defaultHeaders = {
   "Access-Control-Allow-Origin": "*",
-  username: import.meta.env.VITE_REACT_APP_API_USERNAME,
-  password: bcrypt.hashSync(import.meta.env.VITE_REACT_APP_API_PASSWORD, 8),
+  // username: import.meta.env.VITE_REACT_APP_API_USERNAME,
+  // password: bcrypt.hashSync(import.meta.env.VITE_REACT_APP_API_PASSWORD, 8),
 };
 
 const BASE_API = import.meta.env.VITE_REACT_APP_API_URL;
