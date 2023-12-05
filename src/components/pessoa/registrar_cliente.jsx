@@ -32,9 +32,9 @@ export function RegistrarCliente({ onAdicionarCliente }) {
     try {
       const resposta = await axios.post('sua-api-endpoint/aqui', {
         nome: cliente.NOME ,
-        sobrenome: cliente.SOBRENOME,
-        CPF: cliente.CPF,
-        idade: cliente.IDADE,
+        foto: cliente.FOTO,
+        // CPF: cliente.CPF,
+        // idade: cliente.IDADE,
       });
 
       console.log('Dados enviados com sucesso', resposta.data);
@@ -73,12 +73,12 @@ export function RegistrarCliente({ onAdicionarCliente }) {
               </div>
               <div className="w-1/2">
                 <Input
-                  label="Sobrenome"
+                  label="Foto"
+                  // type="file"
                   size="lg"
                   required = "true"
-                  maxLength={120}
-                  value={novoCliente.sobrenome}
-                  onChange={(e) => handleInputChange("sobrenome", e.target.value)}
+                  value={novoCliente.FOTO}
+                  onChange={(e) => handleInputChange("foto", e.target.value)}
                 />
               </div>
             </div>
@@ -95,7 +95,7 @@ export function RegistrarCliente({ onAdicionarCliente }) {
                 </div>
               </div> */}
               
-                <div className="w-1/2">
+                {/* <div className="w-1/2">
                   <Input
                     label="Data de Nascimento"
                     size="sm"
@@ -104,7 +104,7 @@ export function RegistrarCliente({ onAdicionarCliente }) {
                     value={novoCliente.idade}
                     onChange={(e) => handleInputChange("idade", e.target.value)}
                   />
-                </div>
+                </div> */}
             </div>
           </CardBody>
           <CardFooter className="pt-0">

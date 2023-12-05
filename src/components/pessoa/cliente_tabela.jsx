@@ -45,7 +45,7 @@ import {
 
     const TABLE_ROWS = [
       {
-        nome: cliente.NOME + cliente.SOBRENOME,
+        nome: cliente.NOME,
         date: cliente.DATA_NASCIMENTO,
       },
     ];
@@ -172,7 +172,7 @@ import {
             </tbody>
           </table>
         </CardBody>
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+        {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
           <Typography variant="small" color="blue-gray" className="font-normal">
             Página 1 de 1
           </Typography>
@@ -184,7 +184,7 @@ import {
               Próximo
             </Button>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     );
   }
