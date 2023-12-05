@@ -9,19 +9,19 @@ import {
   Input,
 } from "@material-tailwind/react";
 
+import axios from "axios";
+
 export function RegistrarCliente({ onAdicionarCliente }) {
   const [open, setOpen] = useState(false);
   const [novoCliente, setNovoCliente] = useState({
-    nome: "",
-    sobrenome: "",
-    CPF: "",
-    dataDeNascimento: "",
+    NOME: "",
+    FOTO: "",
   });
 
   const handleOpen = () => setOpen((cur) => !cur);
 
   const handleInputChange = (field, value) => {
-    setNovoDoador((prev) => ({
+    setNovoCliente((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -30,11 +30,9 @@ export function RegistrarCliente({ onAdicionarCliente }) {
 
   const handleRegistrarCliente = async () => {
     try {
-      const resposta = await axios.post('sua-api-endpoint/aqui', {
-        nome: cliente.NOME ,
-        foto: cliente.FOTO,
-        // CPF: cliente.CPF,
-        // idade: cliente.IDADE,
+      const resposta = await axios.post('https://localhost:7196/api/Cliente/adicionar', {
+        nome: novoCliente.NOME,
+        foto: novoCliente.FOTO
       });
 
       console.log('Dados enviados com sucesso', resposta.data);
@@ -67,8 +65,8 @@ export function RegistrarCliente({ onAdicionarCliente }) {
                   size="lg"
                   required = "true"
                   maxLength={20}
-                  value={novoCliente.nome}
-                  onChange={(e) => handleInputChange("nome", e.target.value)}
+                  value={novoCliente.NOME}
+                  onChange={(e) => handleInputChange("NOME", e.target.value)}
                 />
               </div>
               <div className="w-1/2">
@@ -78,7 +76,7 @@ export function RegistrarCliente({ onAdicionarCliente }) {
                   size="lg"
                   required = "true"
                   value={novoCliente.FOTO}
-                  onChange={(e) => handleInputChange("foto", e.target.value)}
+                  onChange={(e) => handleInputChange("FOTO", e.target.value)}
                 />
               </div>
             </div>
