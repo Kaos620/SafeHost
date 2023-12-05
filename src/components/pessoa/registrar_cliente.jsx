@@ -83,7 +83,7 @@ export function RegistrarCliente({ onAdicionarCliente }) {
               </div>
             </div>
             <div className="flex gap-4">
-              <div className="w-1/2">
+              {/* <div className="w-1/2">
                 <div className="flex gap-2">
                   
                   <Input
@@ -93,7 +93,7 @@ export function RegistrarCliente({ onAdicionarCliente }) {
                     value={novoCliente.CPF}
                   />
                 </div>
-              </div>
+              </div> */}
               
                 <div className="w-1/2">
                   <Input

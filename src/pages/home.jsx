@@ -5,7 +5,7 @@ import { Card, CardBody, Typography } from "@material-tailwind/react";
 export function Home() {
   return (
     <div className="flex justify-between p-4">
-      <Card className="w-32 h-32 flex items-center justify-center bg-blue-500 rounded-full">
+      <Card className="w-80 h-80 flex items-center justify-center bg-blue-500 ">
         <CardBody>
           <Typography
             as="li"
@@ -23,8 +23,8 @@ export function Home() {
         </CardBody>
       </Card>
 
-      <Card className="w-32 h-32 flex items-center justify-center bg-blue-500 rounded-full">
-        <CardBody>
+      <Card className="w-80 h-80 flex items-center justify-center bg-blue-500 ">
+        <CardBody className="">
           <Typography
             as="li"
             variant="small"
@@ -41,7 +41,7 @@ export function Home() {
         </CardBody>
       </Card>
 
-      <Card className="w-32 h-32 flex items-center justify-center bg-blue-500 rounded-full">
+      <Card className="w-80 h-80 flex items-center justify-center bg-blue-500 ">
         <CardBody>
           <Typography
             as="li"
