@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { RegistrarCategoria } from "./categoria";
 import { AdicionarProduto } from "./registrar_produto";
+import { RegistrarFamilia } from "./familia";
 // import { api } from "../../services/api";
 //import { toast } from "react-toastify";
 import {
@@ -99,6 +100,8 @@ import {
               </AdicionarProduto>
               
               <RegistrarCategoria className="flex items-center gap-3" size="sm"/>
+              <RegistrarFamilia className="flex items-center gap-3" size="sm"/>
+              
 
             </div>
           </div>

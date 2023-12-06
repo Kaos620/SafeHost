@@ -99,15 +99,7 @@ export function AdicionarProduto({ onAdicionarProduto }) {
               value={novoProduto.familia}
               onChange={(e) => handleInputChange("familia", e.target.value)}
             />
-            <Typography className="-mb-2" variant="h6">
-              Categoria do Produto
-            </Typography>
-            <Select
-              label="Categoria do Produto"
-              size="lg"
-              options={options}
-              onChange={(e) => handleInputChange("categoria", e.target.value)}
-            />
+
           </CardBody>
           <CardFooter className="pt-0">
             <Button
