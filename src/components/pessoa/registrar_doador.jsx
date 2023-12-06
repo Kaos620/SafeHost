@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import axios from "axios";
 import {
   Button,
   Dialog,
@@ -6,16 +7,14 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Typography,
   Input,
   Select,
-  Switch,
   Option,
 } from "@material-tailwind/react";
 
 
 
-export function RegistrarDoador({ onAdicionarDoador }) {
+export function RegistrarDoador({}) {
   const [open, setOpen] = useState(false);
   const [novoDoador, setNovoDoador] = useState({
     nome: "",
@@ -41,14 +40,12 @@ export function RegistrarDoador({ onAdicionarDoador }) {
       ...prev,
       [field]: value,
     }));
+    setNovoEndereco((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
-  const handleInputChangePessoa = (campo, valor) => {
-    setDadosPessoa({ ...dadosPessoa, [campo]: valor });
-  };
-
-  const handleInputChangeEndereco = (campo, valor) => {
-    setDadosEndereco({ ...dadosEndereco, [campo]: valor });}
   
   const handleSwitchChange = () => {
     setNovoDoador((prev) => ({
@@ -61,16 +58,15 @@ export function RegistrarDoador({ onAdicionarDoador }) {
   const handleRegistrarDoador = async () => {
     try {
       const resposta = await axios.post('sua-api-endpoint/aqui', {
-        nome: dadosPessoa.nome ,
-        sobrenome: dadosPessoa.sobrenome,
-        documento: dadosPessoa.documento,
-        isCPF: true,
-        dataDeNascimento: dadosPessoa.dataDeNascimento,
-        logradouro: dadosEndereco.logradouro,
-        numero: dadosEndereco.numero,
-        complemento: dadosEndereco.complemento,
-        cidade: dadosEndereco.cidade,
-        cep: dadosEndereco.cep,
+        nome: novoDoador.nome ,
+        sobrenome: novoDoador.sobrenome,
+        documento: novoDoador.documento,
+        dataDeNascimento: novoDoador.dataDeNascimento,
+        logradouro: novoDoador.logradouro,
+        numero: novoDoador.numero,
+        complemento: novoDoador.complemento,
+        cidade: novoDoador.cidade,
+        cep: novoDoador.cep,
       });
 
       console.log('Dados enviados com sucesso', resposta.data);
@@ -153,6 +149,7 @@ export function RegistrarDoador({ onAdicionarDoador }) {
                   <Input
                     label="Logradouro"
                     size="lg"
+                    type="text"
                     required={true}
                     maxLength={60}
                     value={novoEndereco.logradouro}

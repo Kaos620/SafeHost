@@ -4,6 +4,7 @@ import { AdicionarProduto } from "./registrar_produto";
 import { RegistrarFamilia } from "./familia";
 import axios from "axios"; 
 import { toast } from "react-toastify";
+
 import {
     MagnifyingGlassIcon,
     ChevronUpDownIcon,
@@ -114,7 +115,7 @@ import {
               <AdicionarProduto variant="outlined" size="sm">
                 <handleAdicionarProduto/>;
               </AdicionarProduto>
-              
+            
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
