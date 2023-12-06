@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
+import axios from "axios";
 // import { api } from "../../services/api";
 //import { toast } from "react-toastify";
 
@@ -18,8 +19,8 @@ export function AdicionarProduto({ onAdicionarProduto }) {
   const [open, setOpen] = useState(false);
   const [novoProduto, setNovoProduto] = useState({
     nome: "",
-    familia: "",
-    categoria: "",
+    familia: 0,
+    categoria: 0,
   });
 
   const handleOpen = () => setOpen((cur) => !cur);

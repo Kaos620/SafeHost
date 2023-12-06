@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FazerCheckIn } from "./check_in";
 import { RegistrarCliente } from "./registrar_cliente";
 import { DesativarPessoa } from "./desativar";
+import axios from "axios"; 
+import { toast } from "react-toastify";
 
 import {
     MagnifyingGlassIcon,
@@ -19,36 +21,40 @@ import {
   } from "@material-tailwind/react";
    
 
-  const TABLE_HEAD = ["Cliente", "Ultima Entrada", "Check-In" ,"Desativar"];
+  const TABLE_HEAD = ["Cliente", "Check-In" ,"Desativar"];
    
   
   export function Clientes() {
     
     const [editedRows, setEditedRows] = useState({});
-    const [cliente, setcliente ] = useState({})
+    const [cliente, setcliente ] = useState([])
     
-    //   useEffect = (() => {
-      //     getCliente();
-      //     }, [])
-      
-      // async function getCliente() {
-        // 	try {
-          
-          // 		const { data } = await api.get('/api/Cliente/buscartodos');
-	// 		setCliente(data);
-	// 	} catch (err) {
-    // 		const messageError = err.message;
-    // 		toast.error({messageError});
-    // 	}
-    // }
+    useEffect(() => {
+      try {
+        getCliente()
+      } catch (error) {
+        const messageError = error.message
+        toast.error(messageError)
+      }
 
+    }, [])
 
-    const TABLE_ROWS = [
-      {
-        nome: cliente.NOME,
-        date: cliente.DATA_NASCIMENTO,
-      },
-    ];
+  async function getCliente() {
+		try {
+      console.log("Caiu api get getCliente")
+
+      const apiUrl = 'https://localhost:7196/api/Cliente/buscartodos';
+			const resposta = await axios.get(apiUrl);
+
+      console.log("Data de getCliente: {0}", resposta.data)
+			setcliente(resposta.data)
+
+      console.log("Data de getCliente completa: {0}", cliente)
+		} catch (err) {
+			const messageError = err.message;
+			toast.error({messageError});
+		}
+	}
     
     const handleInputChange = (index, field, value) => {
       setEditedRows((prev) => ({
@@ -62,16 +68,16 @@ import {
 
     const handleAdicionarCliente = (novoCliente) => {
       // Adicionar o novo produto à tabela
-      setTableRows((prevRows) => [...prevRows, { ...novoDoador, date: getCurrentDate() }]);
+      setTableRows((prevRows) => [...prevRows, { ...setcliente, date: getCurrentDate() }]);
     };
   
-    const getCurrentDate = () => {
-      const currentDate = new Date();
-      const day = currentDate.getDate();
-      const month = currentDate.getMonth() + 1; // Os meses começam do zero
-      const year = currentDate.getFullYear();
-      return `${day}/${month}/${year}`;
-    };
+    // const getCurrentDate = () => {
+    //   const currentDate = new Date();
+    //   const day = currentDate.getDate();
+    //   const month = currentDate.getMonth() + 1; // Os meses começam do zero
+    //   const year = currentDate.getFullYear();
+    //   return `${day}/${month}/${year}`;
+    // };
   
 
 
@@ -125,16 +131,9 @@ import {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
-                ({ nome, date }, index) => {
-                  const isLast = index === TABLE_ROWS.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
-   
-                  return (
-                    <tr key={nome}>
-                      <td className={classes}>
+              {cliente.map((item, index) => (
+                    <tr key={item.clientE_ID}>
+                      <td>
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
                             <Typography
@@ -142,13 +141,13 @@ import {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {editedRows[index]?.nome || nome}
+                              {item.nome}
                             </Typography>
 
                           </div>
                         </div>
                       </td>
-                      <td className={classes}>
+                      {/* <td>
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -156,19 +155,17 @@ import {
                         >
                           {editedRows[index]?.date || date}
                         </Typography>
-                      </td>
+                      </td> */}
 
-                      <td className={classes}>
+                      <td>
                         <FazerCheckIn className="flex items-center gap-3" size="sm"/>
                       </td>
 
-                      <td className={classes}>
+                      <td>
                             <DesativarPessoa />
                       </td>
                     </tr>
-                  );
-                },
-              )}
+              ))}
             </tbody>
           </table>
         </CardBody>
