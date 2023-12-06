@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
-import axios from "axios"; 
+import axios from "axios";
 import { toast } from "react-toastify";
 
 import {
@@ -12,7 +12,7 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
- 
+
 export function RegistrarFamilia() {
   const [open, setOpen] = useState(false);
   const [novaFamilia, setNovaFamilia] = useState([])
@@ -21,6 +21,7 @@ export function RegistrarFamilia() {
 
   useEffect(() => {
     try {
+      console.log("Caiu useeffect")
       getCategoria()
     } catch (error) {
       const messageError = error.message
@@ -29,42 +30,42 @@ export function RegistrarFamilia() {
 
   }, [])
 
-async function getCategoria() {
-      try {
-    console.log("Caiu api get doador")
+  async function getCategoria() {
+    try {
+      console.log("Caiu api get doador")
 
-    const apiUrl = 'https://localhost:7196/api/Categoria/buscartodos';
-          const resposta = await axios.get(apiUrl);
+      const apiUrl = 'https://localhost:7196/api/ProdutoCategoria/buscartodos';
+      const resposta = await axios.get(apiUrl);
 
-    console.log("Data de Doador: {0}", resposta.data)
-          setCategoria(resposta.data)
+      console.log("Data de Doador: {0}", resposta.data)
+      setCategoria(resposta.data)
 
-    console.log("Data de Doador completa: {0}", categoria)
-      } catch (err) {
-          const messageError = err.message;
-          toast.error({messageError});
-      }
+      console.log("Data de Doador completa: {0}", categoria)
+    } catch (err) {
+      const messageError = err.message;
+      toast.error({ messageError });
+    }
   }
 
   const handleSelectChange = (selected) => {
-    setIdCategoria(selected)
+    setIdCategoria(selected.value)
   }
 
 
   const handleOpen = () => setOpen((cur) => !cur);
 
-  const handleRegistrarFamilia  = async () => {
+  const handleRegistrarFamilia = async () => {
 
-    const categoriaId = idCategoria.PRODUTO_CATEGORIA_ID;
+    const categoriaId = idCategoria;
 
     try {
       console.log("Entrou api post Familia")
 
       const resposta = await axios.post(
         'https://localhost:7196/api/ProdutoCategoria/adicionar', {
-          FAMILIA: novaFamilia,
-          PRODUTO_CATEGORIA_ID: categoriaId
-        });
+        FAMILIA: novaFamilia,
+        PRODUTO_CATEGORIA_ID: categoriaId
+      });
 
       console.log('Dados enviados com sucesso', resposta.data);
     } catch (erro) {
@@ -72,7 +73,12 @@ async function getCategoria() {
     }
     setOpen(false);
   }
-  
+
+  // const options = categoria.map(categoria => ({
+  //   value: categoria.produtO_CATEGORIA_ID,
+  //   label: categoria.descricao
+  // }));
+
   return (
     <>
       <Button onClick={handleOpen}>Registrar Familia</Button>
@@ -86,7 +92,7 @@ async function getCategoria() {
           <Card className="mx-auto w-full max-w-[24rem]">
             <CardBody className="flex flex-col gap-4">
               <Typography variant="h4" color="blue-gray">
-              Familia
+                Familia
               </Typography>
               <Typography
                 className="mb-3 font-normal"
@@ -106,16 +112,21 @@ async function getCategoria() {
                 onChange={(e) => setNovaFamilia(e.target.value)}
               />
 
-            <Typography className="-mb-2" variant="h6">
-              Categoria do Produto
-            </Typography>
-            <Select
-              label="Categoria do Produto"
-              size="lg"
-              options={categoria}
-              onChange={handleSelectChange}
-            />
-              
+              <Typography className="-mb-2" variant="h6">
+                Categoria do Produto
+              </Typography>
+              <Select
+                label="Categoria do Produto"
+                size="lg"
+                options={categoria.map(categoria => (
+                  {
+                    value: categoria.produtO_CATEGORIA_ID,
+                    label: categoria.descricao
+                  }
+                ))}
+                onChange={handleSelectChange}
+              />
+
             </CardBody>
 
             <CardFooter className="pt-0">
@@ -133,4 +144,4 @@ async function getCategoria() {
       </form>
     </>
   );
-  }
+}

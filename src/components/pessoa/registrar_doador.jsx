@@ -14,7 +14,7 @@ import {
 
 
 
-export function RegistrarDoador({}) {
+export function RegistrarDoador({ }) {
   const [open, setOpen] = useState(false);
   const [novoDoador, setNovoDoador] = useState({
     nome: "",
@@ -32,9 +32,9 @@ export function RegistrarDoador({}) {
     cep: "",
   });
 
-  
+
   const handleOpen = () => setOpen((cur) => !cur);
-  
+
   const handleInputChange = (field, value) => {
     setNovoDoador((prev) => ({
       ...prev,
@@ -46,7 +46,7 @@ export function RegistrarDoador({}) {
     }));
   };
 
-  
+
   const handleSwitchChange = () => {
     setNovoDoador((prev) => ({
       ...prev,
@@ -56,17 +56,26 @@ export function RegistrarDoador({}) {
   };
 
   const handleRegistrarDoador = async () => {
+    console.log("data nascimento {0}", novoDoador.dataDeNascimento)
     try {
-      const resposta = await axios.post('sua-api-endpoint/aqui', {
-        nome: novoDoador.nome ,
-        sobrenome: novoDoador.sobrenome,
-        documento: novoDoador.documento,
-        dataDeNascimento: novoDoador.dataDeNascimento,
-        logradouro: novoDoador.logradouro,
-        numero: novoDoador.numero,
-        complemento: novoDoador.complemento,
-        cidade: novoDoador.cidade,
-        cep: novoDoador.cep,
+      const resposta = await axios.post('https://localhost:7196/api/Doador/adicionar', {
+        Doador: {
+          cpf: novoDoador.documento.length == 11 ? novoDoador.documento : "",
+          cnpj: novoDoador.documento.length == 14 ? novoDoador.documento : "",
+        },
+        Colaborador: {
+          nome: novoDoador.nome,
+          sobrenome: novoDoador.sobrenome,
+          cpf: novoDoador.documento,
+          dataDeNascimento: novoDoador.dataDeNascimento
+        },
+        Endereco: {
+          logradouro: novoEndereco.logradouro,
+          numero: novoEndereco.numero,
+          complemento: novoEndereco.complemento,
+          cidade: novoEndereco.cidade,
+          cep: novoEndereco.cep
+        }
       });
 
       console.log('Dados enviados com sucesso', resposta.data);
@@ -216,4 +225,4 @@ export function RegistrarDoador({}) {
       </form>
     </>
   );
-  }
+}
