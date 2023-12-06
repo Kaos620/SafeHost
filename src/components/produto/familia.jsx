@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Select from "react-select";
-import axios from "axios";
+import axios from "axios"; 
+import { toast } from "react-toastify";
 
 import {
   Button,
@@ -52,8 +53,7 @@ async function getCategoria() {
 
   const handleOpen = () => setOpen((cur) => !cur);
 
-  const handleRegistrarFamilia  = async (e) => {
-    e.preventDefault();
+  const handleRegistrarFamilia  = async () => {
 
     const categoriaId = idCategoria.PRODUTO_CATEGORIA_ID;
 

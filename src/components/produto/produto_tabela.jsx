@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RegistrarCategoria } from "./categoria";
 import { AdicionarProduto } from "./registrar_produto";
 import { RegistrarFamilia } from "./familia";
-// import { api } from "../../services/api";
-//import { toast } from "react-toastify";
+import axios from "axios"; 
+import { toast } from "react-toastify";
 import {
     MagnifyingGlassIcon,
     ChevronUpDownIcon,
@@ -22,30 +22,41 @@ import {
   } from "@material-tailwind/react";
    
 
-  const TABLE_HEAD = ["Produto", "Categoria", "Ultima Entrada", "Excluir"];
+  const TABLE_HEAD = ["Produto", "Categoria", "Perecivel", "Peso", "Ultima Entrada", "Excluir"];
    
   
    
   export function Produtos() {
 
-      //   useEffect = (() => {
-      //     getProduto();
-      //     }, [])
-
-      // async function getProduto() {
-      // 	try {
-
-      // 		const { data } = await api.get('/api/Produto/buscartodos');
-      // 		setProduto(data);
-      // 	} catch (err) {
-      // 		const messageError = err.message;
-      // 		toast.error({messageError});
-      // 	}
-      // }
-
     const [editedRows, setEditedRows] = useState({});
-    const [produto, setProduto ] = useState({})
+    const [produto, setProduto ] = useState([])
 
+    useEffect(() => {
+      try {
+        getProduto()
+      } catch (error) {
+        const messageError = error.message
+        toast.error(messageError)
+      }
+
+    }, [])
+
+    async function getProduto() {
+      try {
+        console.log("Caiu api get getProduto")
+  
+        const apiUrl = 'https://localhost:7196/api/Produto/buscartodos';
+        const resposta = await axios.get(apiUrl);
+  
+        console.log("Data de getProduto: {0}", resposta.data)
+        setProduto(resposta.data)
+  
+        console.log("Data de getCliente completa: {0}", produto)
+      } catch (err) {
+        const messageError = err.message;
+        toast.error({messageError});
+      }
+    }
 
     const handleInputChange = (index, field, value) => {
       setEditedRows((prev) => ({
@@ -72,13 +83,13 @@ import {
       setTableRows((prevRows) => [...prevRows, { ...novoProduto, date: getCurrentDate() }]);
     };
   
-    const getCurrentDate = () => {
-      const currentDate = new Date();
-      const day = currentDate.getDate();
-      const month = currentDate.getMonth() + 1; // Os meses começam do zero
-      const year = currentDate.getFullYear();
-      return `${day}/${month}/${year}`;
-    };
+    // const getCurrentDate = () => {
+    //   const currentDate = new Date();
+    //   const day = currentDate.getDate();
+    //   const month = currentDate.getMonth() + 1; // Os meses começam do zero
+    //   const year = currentDate.getFullYear();
+    //   return `${day}/${month}/${year}`;
+    // };
   
 
 
@@ -95,14 +106,15 @@ import {
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+              
+              <RegistrarCategoria className="flex items-center gap-3" size="sm"/>
+
+              <RegistrarFamilia className="flex items-center gap-3" size="sm"/>
+
               <AdicionarProduto variant="outlined" size="sm">
                 <handleAdicionarProduto/>;
               </AdicionarProduto>
               
-              <RegistrarCategoria className="flex items-center gap-3" size="sm"/>
-              <RegistrarFamilia className="flex items-center gap-3" size="sm"/>
-              
-
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -142,7 +154,7 @@ import {
             </thead>
             <tbody>
               {TABLE_ROWS.map(
-                ({ nome, familia, categoria, date }, index) => {
+                ({ nome, familia, categoria, peso, perecivel, valor, date }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const classes = isLast
                     ? "p-4"
@@ -178,6 +190,39 @@ import {
                             className="font-normal"
                           >
                              {editedRows[index]?.categoria || categoria}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                             {editedRows[index]?.peso || peso}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                             {editedRows[index]?.perecivel || perecivel}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                             {editedRows[index]?.valor || valor}
                           </Typography>
                         </div>
                       </td>

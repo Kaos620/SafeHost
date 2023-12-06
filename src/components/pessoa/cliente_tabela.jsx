@@ -132,7 +132,7 @@ import {
             </thead>
             <tbody>
               {cliente.map((item, index) => (
-                    <tr key={item.clientE_ID}>
+                    <tr key={item.cliente_ID}>
                       <td>
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
