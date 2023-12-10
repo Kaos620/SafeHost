@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RegistrarDoador } from "./registrar_doador";
+import { ExcluirDaodorModal } from "./desativar_doador";
 import axios from 'axios';
 import { toast } from "react-toastify";
 
@@ -143,7 +144,7 @@ export function Doadores() {
                   </Typography>
                 </td>
                 <td className="p-4">
-                  <DesativarPessoa />
+                  <ExcluirDaodorModal id={item.doador.doadoR_ID}/>
                 </td>
               </tr>
             ))}

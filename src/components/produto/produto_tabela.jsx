@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { RegistrarCategoria } from "./categoria";
 import { AdicionarProduto } from "./registrar_produto";
 import { RegistrarFamilia } from "./familia";
+import { ExcluirProdutoModal } from "./excluir_produto";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -226,11 +227,7 @@ export function Produtos() {
                         </Typography>
                       </td> */}
                   <td>
-                    <Tooltip content="Deletar">
-                      <IconButton variant="text">
-                        <XMarkIcon className="h-4 w-4" />
-                      </IconButton>
-                    </Tooltip>
+                    <ExcluirProdutoModal id={item.produtO_ID}/>
                   </td>
                 </tr>
               );

@@ -21,6 +21,7 @@ import {
     IconButton,
     Tooltip,
   } from "@material-tailwind/react";
+import { ExcluirDoacaoModal } from "./excluir_doacao";
    
 
   const TABLE_HEAD = ["Doador", "Produto Id", "Produto", "Deletar"];
@@ -168,11 +169,7 @@ import {
                         </div>
                       </td>
                       <td>
-                        <Tooltip content="Deletar">
-                          <IconButton variant="text">
-                            <XMarkIcon className="h-4 w-4" />
-                          </IconButton>
-                        </Tooltip>
+                        <ExcluirDoacaoModal id={doacao.doacao.doacaO_ID}/>
                       </td>
                     </tr>
                   );
