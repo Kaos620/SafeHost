@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FazerCheckIn } from "./check_in";
 import { RegistrarCliente } from "./registrar_cliente";
-import { DesativarPessoa } from "./desativar_pessoa";
+import { ExcluirClienteModal} from "./desativar_cliente";
 import axios from "axios"; 
 import { toast } from "react-toastify";
 
@@ -28,7 +28,7 @@ import {
     
     const [editedRows, setEditedRows] = useState({});
     const [cliente, setcliente ] = useState([])
-    
+
     useEffect(() => {
       try {
         getCliente()
@@ -55,19 +55,6 @@ import {
 			toast.error({messageError});
 		}
 	}
-    
-    const handleInputChange = (index, field, value) => {
-      setEditedRows((prev) => ({
-        ...prev,
-        [index]: {
-          ...prev[index],
-          [field]: value,
-        },
-      }));
-    };
-
-  
-
 
     return (
       <Card className="h-full w-full">
@@ -120,7 +107,7 @@ import {
             </thead>
             <tbody>
               {cliente.map((item, index) => (
-                    <tr key={item.cliente_ID}>
+                    <tr key={item.clientE_ID}>
                       <td>
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
@@ -140,7 +127,7 @@ import {
                       </td>
 
                       <td>
-                            <DesativarPessoa />
+                            <ExcluirClienteModal id={item.clientE_ID} />
                       </td>
                     </tr>
               ))}

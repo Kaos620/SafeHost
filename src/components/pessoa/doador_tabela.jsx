@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { RegistrarDoador } from "./registrar_doador";
-import { DesativarPessoa } from "./desativar_pessoa";
-// import { api } from "../../services/api";
 import axios from 'axios';
 import { toast } from "react-toastify";
 

@@ -128,7 +128,7 @@ import {
             </thead>
             <tbody>
               {doacao.map(
-                (daoacao, index) => {
+                (doacao, index) => {
      
                   return (
                     <tr key={doacao.doacao.doacaO_ID}>
