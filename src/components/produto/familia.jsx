@@ -61,8 +61,7 @@ export function RegistrarFamilia() {
     try {
       console.log("Entrou api post Familia")
 
-      const resposta = await axios.post(
-        'https://localhost:7196/api/ProdutoCategoria/adicionar', {
+      const resposta = await axios.post('https://localhost:7196/api/ProdutoFamilia/adicionar', {
         FAMILIA: novaFamilia,
         PRODUTO_CATEGORIA_ID: categoriaId
       });
@@ -107,6 +106,7 @@ export function RegistrarFamilia() {
               <Input
                 label="Familia"
                 size="lg"
+                required
                 maxLength={30}
                 value={novaFamilia}
                 onChange={(e) => setNovaFamilia(e.target.value)}
@@ -118,6 +118,7 @@ export function RegistrarFamilia() {
               <Select
                 label="Categoria do Produto"
                 size="lg"
+                required
                 options={categoria.map(categoria => (
                   {
                     value: categoria.produtO_CATEGORIA_ID,

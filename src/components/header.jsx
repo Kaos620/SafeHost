@@ -52,6 +52,16 @@ function NavList() {
           Produtos
         </Link>
       </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="white"
+        className="p-1 font-medium"
+      >
+        <Link to="/doacao" className="flex items-center hover:text-black transition-colors">
+          Doacoes
+        </Link>
+      </Typography>
     </ul>
   );
 }

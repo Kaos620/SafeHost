@@ -47,7 +47,7 @@ export function DesativarPessoa({ onAdicionarEndereco }) {
   return (
     <>
       <Button onClick={handleOpen} className="bg-transparents"> 
-        <XMarkIcon className="h-4 w-4 b" color="black"/> 
+        <XMarkIcon className="h-4 w-4" color="black"/> 
       </Button>
       <Dialog
         size="sm"

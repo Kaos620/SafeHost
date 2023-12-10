@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { FazerCheckIn } from "./check_in";
-import { RegistrarCliente } from "./registrar_cliente";
-import { DesativarPessoa } from "./desativar_pessoa";
+import { AdicionarDoacao } from "./registrar_doacao";
+import { RegistrarCategoria } from "./categoria";
+import { RegistrarFamilia } from "./familia";
 import axios from "axios"; 
 import { toast } from "react-toastify";
 
@@ -18,20 +18,23 @@ import {
     Button,
     CardBody,
     CardFooter,
+    IconButton,
+    Tooltip,
   } from "@material-tailwind/react";
    
 
-  const TABLE_HEAD = ["Cliente", "Check-In" ,"Desativar"];
+  const TABLE_HEAD = ["Doador", "Produto Id", "Produto", "Deletar"];
    
   
-  export function Clientes() {
-    
+   
+  export function Doacoes() {
+
     const [editedRows, setEditedRows] = useState({});
-    const [cliente, setcliente ] = useState([])
-    
+    const [doacao, setDoacao ] = useState([])
+
     useEffect(() => {
       try {
-        getCliente()
+        getDoacao()
       } catch (error) {
         const messageError = error.message
         toast.error(messageError)
@@ -39,23 +42,23 @@ import {
 
     }, [])
 
-  async function getCliente() {
-		try {
-      console.log("Caiu api get getCliente")
+    async function getDoacao() {
+      try {
+        console.log("Caiu api get getDoacao")
+  
+        const apiUrl = 'https://localhost:7196/api/Doacao/buscartodos';
+        const resposta = await axios.get(apiUrl);
+  
+        console.log("Data de getDoacao: {0}", resposta.data)
+        setDoacao(resposta.data)
+  
+        console.log("Data de getDoacao completa: {0}", doacao)
+      } catch (err) {
+        const messageError = err.message;
+        toast.error({messageError});
+      }
+    }
 
-      const apiUrl = 'https://localhost:7196/api/Cliente/buscartodos';
-			const resposta = await axios.get(apiUrl);
-
-      console.log("Data de getCliente: {0}", resposta.data)
-			setcliente(resposta.data)
-
-      console.log("Data de getCliente completa: {0}", cliente)
-		} catch (err) {
-			const messageError = err.message;
-			toast.error({messageError});
-		}
-	}
-    
     const handleInputChange = (index, field, value) => {
       setEditedRows((prev) => ({
         ...prev,
@@ -66,8 +69,6 @@ import {
       }));
     };
 
-  
-
 
     return (
       <Card className="h-full w-full">
@@ -75,22 +76,29 @@ import {
           <div className="mb-8 flex items-center justify-between gap-8">
             <div>
               <Typography variant="h5" color="blue-gray">
-                Lista de Clientes
+                Lista de Doações
+              </Typography>
+              <Typography color="gray" className="mt-1 font-normal">
+                Todos as doações cadastradas devem ter seu doador verificado e cadastrado devidamente.
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <RegistrarCliente variant="outlined" size="sm" />
-              
 
+              <RegistrarCategoria  className="flex items-center gap-3" size="sm"/>
+              <RegistrarFamilia className="flex items-center gap-3" size="sm"/>
+              <AdicionarDoacao className="flex items-center gap-3" size="sm"/>
+
+            
             </div>
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
 
             <div className="w-full md:w-72">
               <Input
-                label="Pesquisar"
-                type="search"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                label = "Pesquisar"
+                type = "search"
+                icon = {<MagnifyingGlassIcon className="h-5 w-5" />
+            }
               />
             </div>
           </div>
@@ -109,7 +117,7 @@ import {
                       color="blue-gray"
                       className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                     >
-                      {head}{""}
+                      {head}{" "}
                       {index !== TABLE_HEAD.length - 1 && (
                         <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
                       )}
@@ -119,8 +127,11 @@ import {
               </tr>
             </thead>
             <tbody>
-              {cliente.map((item, index) => (
-                    <tr key={item.cliente_ID}>
+              {doacao.map(
+                (daoacao, index) => {
+     
+                  return (
+                    <tr key={doacao.doacao.doacaO_ID}>
                       <td>
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
@@ -129,21 +140,44 @@ import {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {item.nome}
+                              {doacao.colaborador.nome} {doacao.colaborador.sobrenome}
                             </Typography>
                           </div>
                         </div>
                       </td>
-
                       <td>
-                        <FazerCheckIn className="flex items-center gap-3" size="sm"/>
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                             {doacao.produto.produtO_ID}
+                          </Typography>
+                        </div>
                       </td>
-
                       <td>
-                            <DesativarPessoa />
+                        <div className="flex flex-col">
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                             {doacao.produto.produtO_DESC}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td>
+                        <Tooltip content="Deletar">
+                          <IconButton variant="text">
+                            <XMarkIcon className="h-4 w-4" />
+                          </IconButton>
+                        </Tooltip>
                       </td>
                     </tr>
-              ))}
+                  );
+                },
+              )}
             </tbody>
           </table>
         </CardBody>

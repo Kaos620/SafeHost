@@ -64,6 +64,7 @@ export function RegistrarCategoria() {
               <Input
                 label="Categoria"
                 size="lg"
+                required
                 maxLength={30}
                 value={novaCategoria}
                 onChange={(e) => setNovaCategoria(e.target.value)}

@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-
+import { Doacoes } from '../components/produto/doacao_tabela';
 import { Doador } from '../pages/doador';
 import { Estoque } from '../pages/estoque';
 import { LogIn } from '../components/login/log_in';
@@ -18,6 +18,7 @@ export function AppRoutes() {
                     <Route path="/doador" element={<Doador />} />
                     <Route path="/cliente" element={<Cliente />} />
                     <Route path="/estoque" element={<Estoque />} />
+                    <Route path ="/doacao" element= {<Doacoes/>}/>
                 </Route>
             </Routes>
         // </AuthProvider>
