@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { XMarkIcon} from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
+
 import {
   Button,
   Dialog,
@@ -8,11 +10,11 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Input,
 } from "@material-tailwind/react";
 
 export function ExcluirClienteModal({ id }) {
   const [open, setOpen] = useState(false);
+  const clienteID = id;
 
   const handleCloseModal = () => {
     setOpen(false);
@@ -24,7 +26,8 @@ export function ExcluirClienteModal({ id }) {
 
   const handleExcluirCliente = async () => {
     try {
-      const apiUrl = `https://localhost:7196/api/Cliente/excluir/${id}`;
+      console.log("ID Cliente: " + clienteID);
+      const apiUrl = `https://localhost:7196/api/Cliente/excluir/${clienteID}`;
       const resposta = await axios.delete(apiUrl);
 
       if (resposta.status === 200) {
