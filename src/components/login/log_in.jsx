@@ -9,6 +9,7 @@ import axios from "axios";
 import SafeHostLogo from "../../assets/SafeHost-Logo.svg";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export function LogIn() {
   const [cpf, setCpf] = useState("")
@@ -88,10 +89,10 @@ export function LogIn() {
             Entrar
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal text-white">
-            Esqueceu sua senha?{" "}
-            <a href="#" className="font-medium text-blue-900 hover:text-blue-300">
-              Resgatar
-            </a>
+            Não é cadastrado?{" "}
+            <Link to ="/cadastrar_usuario" className="font-medium text-blue-900 hover:text-blue-300">
+              Cadastrar
+            </Link>
           </Typography>
         </form>
       </Card>

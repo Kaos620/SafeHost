@@ -1,6 +1,7 @@
 import React from "react";
 import SafeHostLogo from "../assets/SafeHost-Logo.svg";
 import { Link } from 'react-router-dom'
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 
 import {
   Navbar,
@@ -62,6 +63,12 @@ function NavList() {
           Doacoes
         </Link>
       </Typography>
+
+      <div>
+      <Link to="/login" className="flex items-center hover:text-black transition-colors ml-auto">
+          <ArrowRightOnRectangleIcon color="white" className="h-8 w-8" />
+        </Link>
+      </div>
     </ul>
   );
 }
