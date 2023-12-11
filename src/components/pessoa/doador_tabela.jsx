@@ -13,6 +13,7 @@ import {
   Typography,
   CardBody
 } from "@material-tailwind/react";
+import { format, parseISO } from "date-fns";
 
 
 const TABLE_HEAD = ["Doador", "CPF/CNPJ", "Data de Nascimento", "Desativar"];
@@ -41,6 +42,11 @@ export function Doadores() {
       toast.error({ messageError });
     }
   }
+
+  const formatarData = (data) => {
+    const dataFormatada = parseISO(data);
+    return format(dataFormatada, 'dd/MM/yyyy');
+  };
 
 
   return (
@@ -90,7 +96,7 @@ export function Doadores() {
             </tr>
           </thead>
           <tbody>
-            {doador.map((item, index) => (
+            {doador.map((item) => (
               <tr key={item.doador.doadoR_ID}>
                 <td className="p-4">
                   <div className="flex items-center gap-3">
@@ -112,7 +118,7 @@ export function Doadores() {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {item.colaborador.cpf == "" || null ? item.doador.cnpj : item.colaborador.cpf}
+                      {item.colaborador.cpf.trim() ? item.colaborador.cpf : item.doador.cnpj}
                     </Typography>
                   </div>
                 </td>
@@ -122,11 +128,11 @@ export function Doadores() {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    {item.colaborador.datA_NASCIMENTO}
+                    {item.colaborador.datA_NASCIMENTO == null || "" ? "Não possui" : formatarData(item.colaborador.datA_NASCIMENTO)}
                   </Typography>
                 </td>
                 <td className="p-4">
-                  <ExcluirDaodorModal id={item.doador.doadoR_ID}/>
+                  <ExcluirDaodorModal id={item.doador.doadoR_ID} />
                 </td>
               </tr>
             ))}

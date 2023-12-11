@@ -21,7 +21,7 @@ export function RegistrarDoador() {
     sobrenome: "",
     documento: "",
     isCPF: true,
-    dataDeNascimento: "",
+    DATA_NASCIMENTO: "",
   });
 
   const [novoEndereco, setNovoEndereco] = useState({
@@ -56,7 +56,11 @@ export function RegistrarDoador() {
   };
 
   const handleRegistrarDoador = async () => {
-    console.log("data nascimento {0}", novoDoador.dataDeNascimento)
+    console.log("data nascimento", novoDoador.DATA_NASCIMENTO)
+    const dataNascimentoFormatada = new Date(novoDoador.DATA_NASCIMENTO)
+
+    console.log("data nascimento formatada", dataNascimentoFormatada)
+
     try {
       const resposta = await axios.post('https://localhost:7196/api/Doador/adicionar', {
         Doador: {
@@ -67,7 +71,7 @@ export function RegistrarDoador() {
           nome: novoDoador.nome,
           sobrenome: novoDoador.sobrenome,
           cpf: novoDoador.documento,
-          dataDeNascimento: novoDoador.dataDeNascimento
+          DATA_NASCIMENTO: dataNascimentoFormatada
         },
         Endereco: {
           logradouro: novoEndereco.logradouro,
@@ -78,7 +82,7 @@ export function RegistrarDoador() {
         }
       });
 
-      if (resposta.status === 200){
+      if (resposta.status === 200) {
         toast.success("Doador cadastrado com sucesso!")
       }
     } catch (erro) {
@@ -105,7 +109,7 @@ export function RegistrarDoador() {
                   <Input
                     label="Nome"
                     size="lg"
-                    required={true}
+                    required
                     maxLength={20}
                     value={novoDoador.nome}
                     onChange={(e) => handleInputChange("nome", e.target.value)}
@@ -115,7 +119,7 @@ export function RegistrarDoador() {
                   <Input
                     label="Sobrenome"
                     size="lg"
-                    required={true}
+                    required
                     maxLength={120}
                     value={novoDoador.sobrenome}
                     onChange={(e) => handleInputChange("sobrenome", e.target.value)}
@@ -136,7 +140,7 @@ export function RegistrarDoador() {
                       label={novoDoador.isCPF ? "CPF" : "CNPJ"}
                       size="lg"
                       maxLength={novoDoador.isCPF ? 11 : 14}
-                      required={true}
+                      required
                       value={novoDoador.documento}
                       onChange={(e) => handleInputChange("documento", e.target.value)}
                     />
@@ -148,9 +152,9 @@ export function RegistrarDoador() {
                       label="Data de Nascimento"
                       size="lg"
                       type="date"
-                      required={true}
-                      value={novoDoador.dataDeNascimento}
-                      onChange={(e) => handleInputChange("dataDeNascimento", e.target.value)}
+                      // required
+                      value={novoDoador.DATA_NASCIMENTO}
+                      onChange={(e) => handleInputChange("DATA_NASCIMENTO", e.target.value)}
                     />
                   </div>
                 )}
@@ -161,7 +165,7 @@ export function RegistrarDoador() {
                     label="Logradouro"
                     size="lg"
                     type="text"
-                    required={true}
+                    required
                     maxLength={60}
                     value={novoEndereco.logradouro}
                     onChange={(e) => handleInputChange("logradouro", e.target.value)}
@@ -172,7 +176,7 @@ export function RegistrarDoador() {
                     label="Número"
                     maxLength={7}
                     size="lg"
-                    required={true}
+                    required
                     value={novoEndereco.numero}
                     onChange={(e) => handleInputChange("numero", e.target.value)}
                   />
@@ -193,7 +197,7 @@ export function RegistrarDoador() {
                     label="Cidade"
                     size="lg"
                     maxLength={20}
-                    required={true}
+                    required
                     value={novoEndereco.cidade}
                     onChange={(e) => handleInputChange("cidade", e.target.value)}
                   />
