@@ -13,34 +13,29 @@ import {
   Input,
 } from "@material-tailwind/react";
 
+
 export function RegistrarFamilia() {
   const [open, setOpen] = useState(false);
   const [novaFamilia, setNovaFamilia] = useState([])
   const [categoria, setCategoria] = useState([])
-  const [idCategoria, setIdCategoria] = useState([])
+  const [idCategoria, setIdCategoria] = useState(0)
 
   useEffect(() => {
     try {
-      console.log("Caiu useeffect")
       getCategoria()
     } catch (error) {
       const messageError = error.message
       toast.error(messageError)
     }
-
   }, [])
 
   async function getCategoria() {
     try {
-      console.log("Caiu api get doador")
-
       const apiUrl = 'https://localhost:7196/api/ProdutoCategoria/buscartodos';
       const resposta = await axios.get(apiUrl);
 
-      console.log("Data de Doador: {0}", resposta.data)
       setCategoria(resposta.data)
 
-      console.log("Data de Doador completa: {0}", categoria)
     } catch (err) {
       const messageError = err.message;
       toast.error({ messageError });
@@ -55,7 +50,6 @@ export function RegistrarFamilia() {
   const handleOpen = () => setOpen((cur) => !cur);
 
   const handleRegistrarFamilia = async () => {
-
     const categoriaId = idCategoria;
 
     try {
@@ -66,17 +60,15 @@ export function RegistrarFamilia() {
         PRODUTO_CATEGORIA_ID: categoriaId
       });
 
-      console.log('Dados enviados com sucesso', resposta.data);
+      if (resposta.status === 200){
+        toast.success("Familia cadastrada com sucesso!")
+      }
     } catch (erro) {
-      console.error('Erro ao enviar dados:', erro.message);
+      console.error('Erro ao cadastradar familia:', erro.message);
     }
     setOpen(false);
   }
 
-  // const options = categoria.map(categoria => ({
-  //   value: categoria.produtO_CATEGORIA_ID,
-  //   label: categoria.descricao
-  // }));
 
   return (
     <>

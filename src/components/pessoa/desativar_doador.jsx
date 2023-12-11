@@ -24,14 +24,14 @@ export function ExcluirDaodorModal({ id }) {
     setOpen(true);
   };
 
-  const handleExcluirCliente = async () => {
+  const handleExcluirDoador = async () => {
     try {
       console.log("ID Cliente: " + doadorID);
       const apiUrl = `https://localhost:7196/api/Doador/excluir/${doadorID}`;
       const resposta = await axios.delete(apiUrl);
 
       if (resposta.status === 200) {
-        toast.success("Cliente excluído com sucesso!");
+        toast.success("Doador excluído com sucesso!");
       }
     } catch (err) {
       const messageError = err.message;
@@ -62,7 +62,7 @@ export function ExcluirDaodorModal({ id }) {
             <Button
               type="button"
               variant="filled"
-              onClick={handleExcluirCliente}
+              onClick={handleExcluirDoador}
               fullWidth
             >
               Sim

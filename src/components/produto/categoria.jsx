@@ -10,6 +10,7 @@ import {
   Typography,
   Input,
 } from "@material-tailwind/react";
+import { toast } from "react-toastify";
  
 export function RegistrarCategoria() {
   const [open, setOpen] = useState(false);
@@ -29,9 +30,11 @@ export function RegistrarCategoria() {
           DESCRICAO: novaCategoria,
         });
 
-      console.log('Dados enviados com sucesso', resposta.data);
+        if (resposta.status === 200){
+          toast.success("Categoria cadastrada com sucesso!")
+        }
     } catch (erro) {
-      console.error('Erro ao enviar dados:', erro.message);
+      console.error('Erro ao cadastradar categoria:', erro.message);
     }
     setOpen(false);
   }

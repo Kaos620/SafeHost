@@ -5,23 +5,19 @@ import axios from 'axios';
 import { toast } from "react-toastify";
 
 import { MagnifyingGlassIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import { ArrowSmallLeftIcon, ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 
 import {
   Card,
   CardHeader,
   Input,
   Typography,
-  Button,
-  CardBody,
-  CardFooter,
+  CardBody
 } from "@material-tailwind/react";
 
 
 const TABLE_HEAD = ["Doador", "CPF/CNPJ", "Data de Nascimento", "Desativar"];
 
 export function Doadores() {
-  const [editedRows, setEditedRows] = useState({})
   const [doador, setDoador] = useState([])
 
   useEffect(() => {
@@ -31,35 +27,21 @@ export function Doadores() {
       const messageError = error.message
       toast.error(messageError)
     }
-
   }, [])
 
   async function getDoador() {
     try {
-      console.log("Caiu api get doador")
-
       const apiUrl = 'https://localhost:7196/api/Doador/buscartodos';
       const resposta = await axios.get(apiUrl);
 
-      console.log("Data de Doador: {0}", resposta.data)
       setDoador(resposta.data)
 
-      console.log("Data de Doador completa: {0}", doador)
     } catch (err) {
       const messageError = err.message;
       toast.error({ messageError });
     }
   }
 
-  const handleInputChange = (index, field, value) => {
-    setEditedRows((prev) => ({
-      ...prev,
-      [index]: {
-        ...prev[index],
-        [field]: value,
-      },
-    }));
-  };
 
   return (
     <Card className="h-full w-full">
@@ -151,19 +133,6 @@ export function Doadores() {
           </tbody>
         </table>
       </CardBody>
-      {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Página 1 de 1
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm" icon={ArrowSmallLeftIcon}>
-              Anterior
-            </Button>
-            <Button variant="outlined" size="sm" icon={ArrowSmallRightIcon}>
-              Próximo
-            </Button>
-          </div>
-        </CardFooter> */}
     </Card>
   );
 }

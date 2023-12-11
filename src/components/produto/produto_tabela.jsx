@@ -6,21 +6,14 @@ import { ExcluirProdutoModal } from "./excluir_produto";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import {
-  MagnifyingGlassIcon,
-  ChevronUpDownIcon,
-} from "@heroicons/react/24/outline";
-import { XMarkIcon, ArrowSmallLeftIcon, ArrowSmallRightIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
+
 import {
   Card,
   CardHeader,
   Input,
   Typography,
-  Button,
-  CardBody,
-  CardFooter,
-  IconButton,
-  Tooltip,
+  CardBody
 } from "@material-tailwind/react";
 
 
@@ -29,8 +22,6 @@ const TABLE_HEAD = ["Produto", "Familia", "Perecivel", "Peso", "Valor", "Excluir
 
 
 export function Produtos() {
-
-  const [editedRows, setEditedRows] = useState({});
   const [produto, setProduto] = useState([])
 
   useEffect(() => {
@@ -45,45 +36,16 @@ export function Produtos() {
 
   async function getProduto() {
     try {
-      console.log("Caiu api get getProduto")
-
       const apiUrl = 'https://localhost:7196/api/Produto/buscartodos';
       const resposta = await axios.get(apiUrl);
 
-      console.log("Data de getProduto: {0}", resposta.data)
       setProduto(resposta.data)
 
-      console.log("Data de getCliente completa: {0}", produto)
     } catch (err) {
       const messageError = err.message;
       toast.error({ messageError });
     }
   }
-
-  const handleInputChange = (index, field, value) => {
-    setEditedRows((prev) => ({
-      ...prev,
-      [index]: {
-        ...prev[index],
-        [field]: value,
-      },
-    }));
-  };
-
-
-  const handleAdicionarProduto = (novoProduto) => {
-    // Adicionar o novo produto à tabela
-    setTableRows((prevRows) => [...prevRows, { ...novoProduto, date: getCurrentDate() }]);
-  };
-
-  // const getCurrentDate = () => {
-  //   const currentDate = new Date();
-  //   const day = currentDate.getDate();
-  //   const month = currentDate.getMonth() + 1; // Os meses começam do zero
-  //   const year = currentDate.getFullYear();
-  //   return `${day}/${month}/${year}`;
-  // };
-
 
 
   return (
@@ -195,17 +157,6 @@ export function Produtos() {
                       </Typography>
                     </div>
                   </td>
-                  {/* <td>
-                    <div className="flex flex-col">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {item.pereciveL_FLAG == 0 ? "Válido" : "Vencido"}
-                      </Typography>
-                    </div>
-                  </td> */}
                   <td>
                     <div className="flex flex-col">
                       <Typography
@@ -217,15 +168,6 @@ export function Produtos() {
                       </Typography>
                     </div>
                   </td>
-                  {/* <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {editedRows[index]?.date || date}
-                        </Typography>
-                      </td> */}
                   <td>
                     <ExcluirProdutoModal id={item.produtO_ID}/>
                   </td>
@@ -236,19 +178,6 @@ export function Produtos() {
           </tbody>
         </table>
       </CardBody>
-      {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Página 1 de 1
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm" icon = {ArrowSmallLeftIcon} >
-              Anterior
-            </Button>
-            <Button variant="outlined" size="sm" icon = {ArrowSmallRightIcon}>
-              Próximo
-            </Button>
-          </div>
-        </CardFooter> */}
     </Card>
   );
 }

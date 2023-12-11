@@ -24,18 +24,18 @@ export function ExcluirDoacaoModal({ id }) {
     setOpen(true);
   };
 
-  const handleExcluirCliente = async () => {
+  const handleExcluirDoacao = async () => {
     try {
       console.log("ID Cliente: " + doacaoID);
-      const apiUrl = `https://localhost:7196/api/Produto/excluir/${doacaoID}`;
+      const apiUrl = `https://localhost:7196/api/Doacao/excluir/${doacaoID}`;
       const resposta = await axios.delete(apiUrl);
 
       if (resposta.status === 200) {
-        toast.success("Cliente excluído com sucesso!");
+        toast.success("Doação excluída com sucesso!");
       }
     } catch (err) {
       const messageError = err.message;
-      toast.error({ messageError });
+      toast.error(`Erro ao excluir doação: ${messageError}`);
     }
 
     handleCloseModal();
@@ -53,16 +53,16 @@ export function ExcluirDoacaoModal({ id }) {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-4xl max-h-full text-justify p-6 text-blue-800">
-          <CardHeader>Excluir Doador</CardHeader>
+          <CardHeader>Excluir Doação</CardHeader>
           <CardBody>
-            <p>Tem certeza que deseja excluir este cliente?</p>
+            <p>Tem certeza que deseja excluir esta doação?</p>
             <p>Esta ação é irreversível.</p>
           </CardBody>
           <CardFooter className="inline-flex py-3 space-x-3">
             <Button
               type="button"
               variant="filled"
-              onClick={handleExcluirCliente}
+              onClick={handleExcluirDoacao}
               fullWidth
             >
               Sim

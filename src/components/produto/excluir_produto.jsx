@@ -24,18 +24,17 @@ export function ExcluirProdutoModal({ id }) {
     setOpen(true);
   };
 
-  const handleExcluirCliente = async () => {
+  const handleExcluirProduto = async () => {
     try {
-      console.log("ID Cliente: " + produtoID);
       const apiUrl = `https://localhost:7196/api/Produto/excluir/${produtoID}`;
       const resposta = await axios.delete(apiUrl);
 
       if (resposta.status === 200) {
-        toast.success("Cliente excluído com sucesso!");
+        toast.success("Produto excluído com sucesso!");
       }
     } catch (err) {
       const messageError = err.message;
-      toast.error({ messageError });
+      toast.error(`Erro ao excluir produto: ${messageError}`);
     }
 
     handleCloseModal();
@@ -62,7 +61,7 @@ export function ExcluirProdutoModal({ id }) {
             <Button
               type="button"
               variant="filled"
-              onClick={handleExcluirCliente}
+              onClick={handleExcluirProduto}
               fullWidth
             >
               Sim

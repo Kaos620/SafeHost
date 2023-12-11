@@ -5,32 +5,24 @@ import { RegistrarFamilia } from "./familia";
 import axios from "axios"; 
 import { toast } from "react-toastify";
 
-import {
-    MagnifyingGlassIcon,
-    ChevronUpDownIcon,
-  } from "@heroicons/react/24/outline";
-  import { XMarkIcon, ArrowSmallLeftIcon, ArrowSmallRightIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
+
   import {
     Card,
     CardHeader,
     Input,
     Typography,
-    Button,
-    CardBody,
-    CardFooter,
-    IconButton,
-    Tooltip,
+    CardBody
   } from "@material-tailwind/react";
+
 import { ExcluirDoacaoModal } from "./excluir_doacao";
    
 
-  const TABLE_HEAD = ["Doador", "Produto Id", "Produto", "Deletar"];
+const TABLE_HEAD = ["Doador", "Produto Id", "Produto", "Deletar"];
    
   
    
-  export function Doacoes() {
-
-    const [editedRows, setEditedRows] = useState({});
+export function Doacoes() {
     const [doacao, setDoacao ] = useState([])
 
     useEffect(() => {
@@ -45,30 +37,16 @@ import { ExcluirDoacaoModal } from "./excluir_doacao";
 
     async function getDoacao() {
       try {
-        console.log("Caiu api get getDoacao")
-  
         const apiUrl = 'https://localhost:7196/api/Doacao/buscartodos';
         const resposta = await axios.get(apiUrl);
   
-        console.log("Data de getDoacao: {0}", resposta.data)
         setDoacao(resposta.data)
-  
-        console.log("Data de getDoacao completa: {0}", doacao)
+
       } catch (err) {
         const messageError = err.message;
         toast.error({messageError});
       }
     }
-
-    const handleInputChange = (index, field, value) => {
-      setEditedRows((prev) => ({
-        ...prev,
-        [index]: {
-          ...prev[index],
-          [field]: value,
-        },
-      }));
-    };
 
 
     return (
@@ -180,4 +158,4 @@ import { ExcluirDoacaoModal } from "./excluir_doacao";
         </CardBody>
       </Card>
     );
-  }
+}

@@ -1,42 +1,37 @@
 import {
   Card,
   Input,
-  Checkbox,
   Button,
   Typography,
 } from "@material-tailwind/react";
+
 import axios from "axios";
 import SafeHostLogo from "../../assets/SafeHost-Logo.svg";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function LogIn() {
+  const navigate = useNavigate()
+
   const [cpf, setCpf] = useState("")
   const [senha, setSenha] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-      try {
-        console.log("Entrou api post categoria")
-  
+      try { 
         const resposta = await axios.post(
           'https://localhost:7196/api/Autenticacao/autenticar', {
-            cpf: cpf,
-            senha: senha
+            Login: cpf,
+            Senha: senha
           });
 
           if(resposta.status == 200){
-
+            navigate("/")
           }
-          else{
-
-          }
-  
-        console.log('Dados enviados com sucesso', resposta.data);
       } catch (erro) {
-        console.error('Erro ao enviar dados:', erro.message);
+        toast.error('Erro ao enviar dados: ', erro.message);
       }
   }
 

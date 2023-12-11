@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
 import {
   Button,
   Dialog,
@@ -10,8 +11,9 @@ import {
 } from "@material-tailwind/react";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
-export function RegistrarCliente({ onAdicionarCliente }) {
+export function RegistrarCliente() {
   const [open, setOpen] = useState(false);
   const [novoCliente, setNovoCliente] = useState({
     NOME: "",
@@ -35,14 +37,14 @@ export function RegistrarCliente({ onAdicionarCliente }) {
         foto: novoCliente.FOTO
       });
 
-      console.log('Dados enviados com sucesso', resposta.data);
+      if(resposta.status == 200){
+        toast.success("Cliente cadastrado com sucesso!")
+      }
     } catch (erro) {
-      console.error('Erro ao enviar dados:', erro.message);
+      toast.error('Erro ao cadastrar cliente:', erro.message);
     }
     setOpen(false);
   }
-
-
 
 
   return (
@@ -74,35 +76,10 @@ export function RegistrarCliente({ onAdicionarCliente }) {
                   label="Foto"
                   // type="file"
                   size="lg"
-                  required = "true"
                   value={novoCliente.FOTO}
                   onChange={(e) => handleInputChange("FOTO", e.target.value)}
                 />
               </div>
-            </div>
-            <div className="flex gap-4">
-              {/* <div className="w-1/2">
-                <div className="flex gap-2">
-                  
-                  <Input
-                    label={"CPF"}
-                    size="lg"
-                    maxLength={11}
-                    value={novoCliente.CPF}
-                  />
-                </div>
-              </div> */}
-              
-                {/* <div className="w-1/2">
-                  <Input
-                    label="Data de Nascimento"
-                    size="sm"
-                    type="date"
-                    required = "true"
-                    value={novoCliente.idade}
-                    onChange={(e) => handleInputChange("idade", e.target.value)}
-                  />
-                </div> */}
             </div>
           </CardBody>
           <CardFooter className="pt-0">

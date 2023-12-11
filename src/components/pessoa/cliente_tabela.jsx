@@ -5,19 +5,14 @@ import { ExcluirClienteModal} from "./desativar_cliente";
 import axios from "axios"; 
 import { toast } from "react-toastify";
 
+import { MagnifyingGlassIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
+
 import {
-    MagnifyingGlassIcon,
-    ChevronUpDownIcon,
-  } from "@heroicons/react/24/outline";
-  import { XMarkIcon, ArrowSmallLeftIcon, ArrowSmallRightIcon } from "@heroicons/react/24/solid";
-  import {
     Card,
     CardHeader,
     Input,
     Typography,
-    Button,
-    CardBody,
-    CardFooter,
+    CardBody
   } from "@material-tailwind/react";
    
 
@@ -25,8 +20,6 @@ import {
    
   
   export function Clientes() {
-    
-    const [editedRows, setEditedRows] = useState({});
     const [cliente, setcliente ] = useState([])
 
     useEffect(() => {
@@ -36,20 +29,15 @@ import {
         const messageError = error.message
         toast.error(messageError)
       }
-
     }, [])
 
   async function getCliente() {
 		try {
-      console.log("Caiu api get getCliente")
-
       const apiUrl = 'https://localhost:7196/api/Cliente/buscartodos';
 			const resposta = await axios.get(apiUrl);
 
-      console.log("Data de getCliente: {0}", resposta.data)
 			setcliente(resposta.data)
 
-      console.log("Data de getCliente completa: {0}", cliente)
 		} catch (err) {
 			const messageError = err.message;
 			toast.error({messageError});

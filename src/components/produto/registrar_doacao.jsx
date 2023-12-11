@@ -14,13 +14,12 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-export function AdicionarDoacao({ onAdicionarDoacao }) {
+export function AdicionarDoacao() {
   const [open, setOpen] = useState(false);
   const [doador, setDoador] = useState([])
   const [idDoador, setIdDoador] = useState(0)
   const [familia, setFamilia] = useState([])
   const [idFamilia, setIdFamilia] = useState(0)
-
 
 
   useEffect(() => {
@@ -30,7 +29,6 @@ export function AdicionarDoacao({ onAdicionarDoacao }) {
       const messageError = error.message
       toast.error(messageError)
     }
-
   }, [])
 
   useEffect(() => {
@@ -40,21 +38,16 @@ export function AdicionarDoacao({ onAdicionarDoacao }) {
       const messageError = error.message
       toast.error(messageError)
     }
-
   }, [])
 
 
   async function getDoador() {
     try {
-      console.log("Caiu api get doador")
-
       const apiUrl = 'https://localhost:7196/api/Doador/buscartodos';
       const resposta = await axios.get(apiUrl);
 
-      console.log("Data de Doador: {0}", resposta.data)
       setDoador(resposta.data)
 
-      console.log("Data de Doador Completa: {0}", doador)
     } catch (err) {
       const messageError = err.message;
       toast.error({ messageError });
@@ -64,15 +57,11 @@ export function AdicionarDoacao({ onAdicionarDoacao }) {
 
   async function getFamilia() {
     try {
-      console.log("Caiu api get doador")
-
       const apiUrl = 'https://localhost:7196/api/ProdutoFamilia/buscartodos';
       const resposta = await axios.get(apiUrl);
 
-      console.log("Data de Familia: {0}", resposta.data)
       setFamilia(resposta.data)
 
-      console.log("Data de Familia completa: {0}", familia)
     } catch (err) {
       const messageError = err.message;
       toast.error({ messageError });
@@ -89,6 +78,7 @@ export function AdicionarDoacao({ onAdicionarDoacao }) {
 
           
   const handleOpen = () => setOpen((cur) => !cur);
+
   const handleNovoProduto = (field, value) => {
     setNovoProduto((prev) => ({
       ...prev,
@@ -104,16 +94,14 @@ export function AdicionarDoacao({ onAdicionarDoacao }) {
     setIdFamilia(selected.value)
   }
 
-    const RegistrarDoacao = async () => {
-        console.log("Doacao id {0}", idDoador)
-        const doadorId = idDoador;
-        const familiaId = idFamilia;
+  const RegistrarDoacao = async () => {
+    console.log("Doacao id {0}", idDoador)
+    const doadorId = idDoador;
+    const familiaId = idFamilia;
 
     try {
       const resposta = await axios.post('https://localhost:7196/api/Doacao/adicionar', {
-
         DOADOR_ID: doadorId,
-
         Produto: {
           produtO_DESC: novoProduto.PRODUTO_DESC,
           produtO_FAMILIA_ID: familiaId,
@@ -121,11 +109,13 @@ export function AdicionarDoacao({ onAdicionarDoacao }) {
           pereciveL_FLAG: novoProduto.PERECIVEL_FLAG,
           pesO_ITEM: novoProduto.PESO_ITEM
         }
-    });
+      });
   
-        console.log('Dados enviados com sucesso', resposta.data);
+      if (resposta.status === 200){
+        toast.success("Doação cadastrada com sucesso!")
+      }
       } catch (erro) {
-        console.error('Erro ao enviar dados:', erro.message);
+        console.error('Erro ao cadastradar doação:', erro.message);
       }
       setOpen(false);
   };
@@ -214,7 +204,7 @@ export function AdicionarDoacao({ onAdicionarDoacao }) {
                 options={doador.map(doador => (
                   {
                     value: doador.doador.doadoR_ID,
-                    label: doador.colaborador.nome
+                    label: `${doador.colaborador.nome}  ${doador.colaborador.sobrenome}`
                   }
                 ))}
                 onChange={handleSelectDoador}

@@ -11,10 +11,10 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
+import { toast } from "react-toastify";
 
 
-
-export function RegistrarDoador({ }) {
+export function RegistrarDoador() {
   const [open, setOpen] = useState(false);
   const [novoDoador, setNovoDoador] = useState({
     nome: "",
@@ -78,9 +78,11 @@ export function RegistrarDoador({ }) {
         }
       });
 
-      console.log('Dados enviados com sucesso', resposta.data);
+      if (resposta.status === 200){
+        toast.success("Doador cadastrado com sucesso!")
+      }
     } catch (erro) {
-      console.error('Erro ao enviar dados:', erro.message);
+      toast.error('Erro ao cadastrar doador:', erro.message);
     }
     setOpen(false);
   }
@@ -202,7 +204,6 @@ export function RegistrarDoador({ }) {
                   <Input
                     label="CEP"
                     size="lg"
-                    required={true}
                     maxLength={8}
                     value={novoEndereco.cep}
                     onChange={(e) => handleInputChange("cep", e.target.value)}

@@ -14,11 +14,11 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-export function AdicionarProduto({ onAdicionarProduto }) {
+
+export function AdicionarProduto() {
   const [open, setOpen] = useState(false);
   const [familia, setFamilia] = useState([])
   const [idFamilia, setIdFamilia] = useState([])
-
 
 
   useEffect(() => {
@@ -33,15 +33,11 @@ export function AdicionarProduto({ onAdicionarProduto }) {
 
   async function getFamilia() {
     try {
-      console.log("Caiu api get doador")
-
       const apiUrl = 'https://localhost:7196/api/ProdutoFamilia/buscartodos';
       const resposta = await axios.get(apiUrl);
 
-      console.log("Data de Familia: {0}", resposta.data)
       setFamilia(resposta.data)
 
-      console.log("Data de Familia completa: {0}", familia)
     } catch (err) {
       const messageError = err.message;
       toast.error({ messageError });
@@ -71,7 +67,6 @@ export function AdicionarProduto({ onAdicionarProduto }) {
   }
 
   const handleRegistrarProduto = async () => {
-    console.log("Familia id {0}", idFamilia)
     const familiaId = idFamilia;
 
     try {
@@ -83,9 +78,11 @@ export function AdicionarProduto({ onAdicionarProduto }) {
         pesO_ITEM: novoProduto.PESO_ITEM
       });
 
-      console.log('Dados enviados com sucesso', resposta.data);
+      if (resposta.status === 200){
+        toast.success("Produto cadastrado com sucesso!")
+      }
     } catch (erro) {
-      console.error('Erro ao enviar dados:', erro.message);
+      console.error('Erro ao cadastrar produto:', erro.message);
     }
     setOpen(false);
   };

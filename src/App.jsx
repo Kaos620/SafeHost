@@ -6,8 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 export function App() {
   return (
     <BrowserRouter>
+    <ToastContainer position="top-right" />
       <AppRoutes />
-      <ToastContainer />
     </BrowserRouter>
   );
 }
