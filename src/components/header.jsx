@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import SafeHostLogo from "../assets/SafeHost-Logo.svg";
 import { Link } from 'react-router-dom'
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 
-import {
-  Navbar,
-  Collapse,
-  Typography,
-  IconButton,
-} from "@material-tailwind/react";
+import { Navbar, Typography } from "@material-tailwind/react";
+import { AuthContext } from "../contexto/auth";
 
 function NavList() {
+
+
   return (
     <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -64,17 +62,17 @@ function NavList() {
         </Link>
       </Typography>
 
-      <div>
-      <Link to="/login" className="flex items-center hover:text-black transition-colors ml-auto">
-          <ArrowRightOnRectangleIcon color="white" className="h-8 w-8" />
-        </Link>
-      </div>
     </ul>
   );
 }
 
 export function Header() {
-  const [openNav, setOpenNav] = React.useState(false);
+  const [setOpenNav] = React.useState(false);
+  const { logout } = useContext(AuthContext)
+
+  async function handleLogout() {
+    await logout()
+  }
 
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);
@@ -88,7 +86,7 @@ export function Header() {
   }, []);
 
   return (
-    <Navbar className="mx-auto max-w-full px-6 py-5 bg-blue-900 border-0 rounded-none">
+    <Navbar className="flex mx-auto max-w-full px-6 py-5 bg-blue-900 border-0 rounded-none">
       <div className=" items-center inline-flex px-4">
         <img src={SafeHostLogo} alt='Logo do SafeHost' className="w-10 h-8" />
         <Typography
@@ -102,6 +100,13 @@ export function Header() {
         <div className="hidden lg:block">
           <NavList />
         </div>
+
+      </div>
+
+      <div className="w-full">
+        <button onClick={handleLogout} className="flex items-center hover:text-black transition-colors ml-auto">
+          <ArrowRightOnRectangleIcon color="white" className="h-8 w-8" />
+        </button>
       </div>
     </Navbar>
   );

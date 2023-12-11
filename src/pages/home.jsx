@@ -1,9 +1,11 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody, Typography, Button, CardHeader } from "@material-tailwind/react";
+import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
 import { UserGroupIcon, UserPlusIcon, ShoppingCartIcon, GiftIcon } from "@heroicons/react/24/solid";
 
+
+
 export function Home() {
+
   return (
     <div className="flex justify-between p-4">
       <Card>
@@ -16,9 +18,9 @@ export function Home() {
                 color="white"
                 className="p-1 font-medium"
               >
-                    Doadores 
+                Doadores
               </Typography>
-              <UserGroupIcon className="h-40 w-40" color="white"/>
+              <UserGroupIcon className="h-40 w-40" color="white" />
             </CardBody>
           </Button>
         </Link>
@@ -36,7 +38,7 @@ export function Home() {
               >
                 Clientes
               </Typography>
-              <UserPlusIcon className="h-40 w-40" color="white"/>
+              <UserPlusIcon className="h-40 w-40" color="white" />
             </CardBody>
           </Button>
         </Link>
@@ -54,7 +56,7 @@ export function Home() {
               >
                 Produtos
               </Typography>
-              <ShoppingCartIcon className="h-40 w-40" color="white"/>
+              <ShoppingCartIcon className="h-40 w-40" color="white" />
             </CardBody>
           </Button>
         </Link>
@@ -72,7 +74,7 @@ export function Home() {
               >
                 Doações
               </Typography>
-              <GiftIcon className="h-40 w-40" color="white"/>
+              <GiftIcon className="h-40 w-40" color="white" />
             </CardBody>
           </Button>
         </Link>

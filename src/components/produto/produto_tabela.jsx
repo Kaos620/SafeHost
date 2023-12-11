@@ -108,7 +108,7 @@ export function Produtos() {
             </tr>
           </thead>
           <tbody>
-            {produto.map((item, index) => {
+            {produto.map((item) => {
               return (
                 <tr key={item.produtO_ID}>
                   <td>
@@ -142,7 +142,7 @@ export function Produtos() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {item.pereciveL_FLAG == 0 ? "Válido" : "Vencido"}
+                        {item.pereciveL_FLAG == 0 ? "Perecível" : "Não perecível"}
                       </Typography>
                     </div>
                   </td>
@@ -169,7 +169,7 @@ export function Produtos() {
                     </div>
                   </td>
                   <td>
-                    <ExcluirProdutoModal id={item.produtO_ID}/>
+                    <ExcluirProdutoModal id={item.produtO_ID} />
                   </td>
                 </tr>
               );

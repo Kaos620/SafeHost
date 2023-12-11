@@ -1,9 +1,9 @@
 import {
-    Card,
-    Input,
-    Button,
-    Typography,
-  } from "@material-tailwind/react";
+  Card,
+  Input,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
 
 import axios from "axios";
 import SafeHostLogo from "../../assets/SafeHost-Logo.svg";
@@ -11,7 +11,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-  
+
 export function Cadastrar() {
   const navigate = useNavigate();
   const [cpf, setCpf] = useState("")
@@ -19,23 +19,23 @@ export function Cadastrar() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-      try {
-        console.log("Entrou api post categoria")
-  
-        const resposta = await axios.post(
-          'https://localhost:7196/api/Autenticacao/adicionar', {
-            Login: cpf,
-            Senha: senha
-          });
 
-          if(resposta.status == 200){
-            toast.success('Usuário cadastrado com sucesso!')
-            navigate("/login")
-          }
-      } catch (erro) {
-        toast.error('Erro ao enviar dados: {0}', erro.message);
+    try {
+      console.log("Entrou api post categoria")
+
+      const resposta = await axios.post(
+        'https://localhost:7196/api/Autenticacao/adicionar', {
+        Login: cpf,
+        Senha: senha
+      });
+
+      if (resposta.status == 200) {
+        toast.success('Usuário cadastrado com sucesso!')
+        navigate("/login")
       }
+    } catch (erro) {
+      toast.error('Erro ao enviar dados: {0}', erro.message);
+    }
   }
 
 
@@ -60,8 +60,9 @@ export function Cadastrar() {
               placeholder="Apenas números"
               maxLength={11}
               value={cpf}
+              required
               onChange={(e) => setCpf(e.target.value)}
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="!border-t-blue-gray-200 focus:!border-t-gray-900 text-white"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -75,8 +76,9 @@ export function Cadastrar() {
               size="lg"
               placeholder="******"
               value={senha}
+              required
               onChange={(e) => setSenha(e.target.value)}
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="!border-t-blue-gray-200 focus:!border-t-gray-900 text-white"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -91,4 +93,3 @@ export function Cadastrar() {
     </div>
   );
 }
-  

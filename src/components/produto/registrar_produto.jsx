@@ -18,7 +18,16 @@ import {
 export function AdicionarProduto() {
   const [open, setOpen] = useState(false);
   const [familia, setFamilia] = useState([])
-  const [idFamilia, setIdFamilia] = useState([])
+  const [idFamilia, setIdFamilia] = useState(0)
+  const [idTipo, setIdTipo] = useState(0)
+
+  const [novoProduto, setNovoProduto] = useState({
+    PRODUTO_DESC: "",
+    FAMILIA: 0,
+    PRODUTO_VALOR: 0,
+    PERECIVEL_FLAG: 0, // 0 - ATIVO, 1 - DESATIVO
+    PESO_ITEM: 0,
+  });
 
 
   useEffect(() => {
@@ -45,14 +54,6 @@ export function AdicionarProduto() {
   }
 
 
-  const [novoProduto, setNovoProduto] = useState({
-    PRODUTO_DESC: "",
-    FAMILIA: 0,
-    PRODUTO_VALOR: 0,
-    PERECIVEL_FLAG: 0, // 0 - ATIVO, 1 - DESATIVO
-    PESO_ITEM: 0,
-  });
-
   const handleOpen = () => setOpen((cur) => !cur);
 
   const handleInputChange = (field, value) => {
@@ -66,8 +67,13 @@ export function AdicionarProduto() {
     setIdFamilia(selected.value)
   }
 
+  const handleSelectChangeType = (selected) => {
+    setIdTipo(selected.value)
+  }
+
   const handleRegistrarProduto = async () => {
     const familiaId = idFamilia;
+    novoProduto.PERECIVEL_FLAG = idTipo;
 
     try {
       const resposta = await axios.post('https://localhost:7196/api/Produto/adicionar', {
@@ -78,7 +84,7 @@ export function AdicionarProduto() {
         pesO_ITEM: novoProduto.PESO_ITEM
       });
 
-      if (resposta.status === 200){
+      if (resposta.status === 200) {
         toast.success("Produto cadastrado com sucesso!")
       }
     } catch (erro) {
@@ -86,6 +92,11 @@ export function AdicionarProduto() {
     }
     setOpen(false);
   };
+
+  const options = [
+    { valor: 0, label: 'Perecível' },
+    { valor: 1, label: 'Não perecível' },
+  ];
 
   return (
     <>
@@ -107,6 +118,7 @@ export function AdicionarProduto() {
               <Input
                 label="Descrição do Produto"
                 size="lg"
+                required
                 value={novoProduto.PRODUTO_DESC}
                 onChange={(e) => handleInputChange("PRODUTO_DESC", e.target.value)}
               />
@@ -117,6 +129,7 @@ export function AdicionarProduto() {
               <Select
                 label="Família do Produto"
                 size="lg"
+                required
                 options={familia.map(familia => (
                   {
                     value: familia.produtO_FAMILIA_ID,
@@ -132,24 +145,29 @@ export function AdicionarProduto() {
               <Input
                 label="Valor do Produto"
                 size="lg"
+                required
                 value={novoProduto.PRODUTO_VALOR}
                 onChange={(e) => handleInputChange("PRODUTO_VALOR", e.target.value)}
               />
+
               <Typography className="-mb-2" variant="h6">
                 Perecível
               </Typography>
-              <Input
-                label="Perecível (0 - Ativo, 1 - Desativo)"
+              <Select
+                label="Tipo"
                 size="lg"
-                value={novoProduto.PERECIVEL_FLAG}
-                onChange={(e) => handleInputChange("PERECIVEL_FLAG", e.target.value)}
+                required
+                options={options}
+                onChange={handleSelectChangeType}
               />
+
               <Typography className="-mb-2" variant="h6">
                 Peso do Item
               </Typography>
               <Input
                 label="Peso do Item"
                 size="lg"
+                required
                 value={novoProduto.PESO_ITEM}
                 onChange={(e) => handleInputChange("PESO_ITEM", e.target.value)}
               />

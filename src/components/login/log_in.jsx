@@ -5,34 +5,26 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-import axios from "axios";
 import SafeHostLogo from "../../assets/SafeHost-Logo.svg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexto/auth";
 
 export function LogIn() {
-  const navigate = useNavigate()
+  const { login } = useContext(AuthContext);
 
   const [cpf, setCpf] = useState("")
   const [senha, setSenha] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-      try { 
-        const resposta = await axios.post(
-          'https://localhost:7196/api/Autenticacao/autenticar', {
-            Login: cpf,
-            Senha: senha
-          });
 
-          if(resposta.status == 200){
-            navigate("/")
-          }
-      } catch (erro) {
-        toast.error('Erro ao enviar dados: ', erro.message);
-      }
+    try {
+      await login({ cpf, senha })
+    } catch (erro) {
+      toast.error('Erro ao enviar dados: ', erro.message);
+    }
   }
 
 
@@ -58,7 +50,7 @@ export function LogIn() {
               maxLength={11}
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="!border-t-blue-gray-200 focus:!border-t-gray-900 text-white"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -73,7 +65,7 @@ export function LogIn() {
               placeholder="******"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+              className="!border-t-blue-gray-200 focus:!border-t-gray-900 text-white"
               labelProps={{
                 className: "before:content-none after:content-none",
               }}
@@ -85,7 +77,7 @@ export function LogIn() {
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal text-white">
             Não é cadastrado?{" "}
-            <Link to ="/cadastrar_usuario" className="font-medium text-blue-900 hover:text-blue-300">
+            <Link to="/cadastrar_usuario" className="font-medium text-blue-900 hover:text-blue-300">
               Cadastrar
             </Link>
           </Typography>
